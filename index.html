@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+		<style>
+			html,
+			body {
+				margin: 0;
+			}
+			
+			.header {
+				position: fixed;
+				top: 0;
+				left: 0;
+				height: 60px;
+				width: 100%;
+				background-color: #00D6B2;
+			}
+			
+			.content {
+				margin-top: 64px;
+				position: relative;
+			}
+			
+			.modal {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				transform: translateX(-100%);
+				transition: transform 1s;
+				background-color: rgba(0, 0, 0, 0.4);
+			}
+			
+			.show {
+				transform: translateX(0);
+			}
+			
+			.modal-body {
+				height: 300px;
+				overflow: hidden;
+				overflow-y: auto;
+				background-color: rgba(90, 0, 214, 0.2);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="header"></div>
+		<div class="content">
+			<button class="showbtn">显示</button>
+			<button class="closebtn">关闭</button>
+			<h1>444</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<h1>555</h1>
+			<div class="modal">
+				22222222222222222222222222222222<button class="closebtn">关闭</button>
+				<h1>222</h1>
+				<h1>22</h1>
+				<h1>2</h1>
+				<h1>22</h1>
+				<h1>22</h1>
+				<h1>222</h1>
+
+				<div class="modal-body can-scroll">
+
+					<h1>111</h1>
+					<h1>可滑动</h1>
+					<input />
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<input />
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<input />
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<input />
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<input />
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+					<h1>可滑动</h1>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			$(".showbtn").click(function() {
+				$(".modal").addClass("show")
+			})
+			$(".closebtn").click(function() {
+				$(".modal").removeClass("show")
+			})
+			
+			
+			
+			//彻底解决滑动穿透问题
+			$(".modal")[0].addEventListener('touchmove', function(e) {
+				const excludeEl = document.querySelectorAll('.can-scroll');
+				const isExclude = [].some.call(excludeEl, (el) => {
+					return el.contains(e.target)
+				});
+				if(isExclude) {
+					return true;
+				}
+				e.preventDefault();
+			}, false);
+			const excludeEl = document.querySelectorAll('.can-scroll');
+			[].forEach.call(excludeEl, (el) => {
+				let initialY = 0;
+				el.addEventListener('touchstart', e => {
+					if(e.targetTouches.length === 1) {
+						// 单点滑动
+						initialY = e.targetTouches[0].clientY;
+					}
+				});
+				el.addEventListener('touchmove', e => {
+					if(e.targetTouches.length === 1) {
+						// 单点滑动
+						const clientY = e.targetTouches[0].clientY - initialY;
+						if(el.scrollTop + el.clientHeight >= el.scrollHeight &&clientY < 0) {
+							// 向下滑至底部
+							return e.preventDefault();
+						}
+						if(el.scrollTop <= 0 && clientY > 0) {
+							// 向上滑至顶部
+							return e.preventDefault();
+						}
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>
